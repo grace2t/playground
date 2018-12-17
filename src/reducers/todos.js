@@ -5,16 +5,17 @@ import {
   COMPLETE_TODO,
   COMPLETE_ALL_TODOS,
   CLEAR_COMPLETED
-} from '../constants/ActionTypes'
+} from "../constants/ActionTypes";
 
 const initialState = [
   {
-    text: 'Use Redux',
+    text: "Use Redux",
     completed: false,
     id: 0
   }
-]
+];
 
+// this is a Reducer [fn. 1]
 export default function todos(state = initialState, action) {
   switch (action.type) {
     case ADD_TODO:
@@ -25,38 +26,41 @@ export default function todos(state = initialState, action) {
           completed: false,
           text: action.text
         }
-      ]
+      ];
 
     case DELETE_TODO:
-      return state.filter(todo =>
-        todo.id !== action.id
-      )
+      return state.filter(todo => todo.id !== action.id);
 
     case EDIT_TODO:
       return state.map(todo =>
-        todo.id === action.id ?
-          { ...todo, text: action.text } :
-          todo
-      )
+        todo.id === action.id ? { ...todo, text: action.text } : todo
+      );
 
     case COMPLETE_TODO:
       return state.map(todo =>
-        todo.id === action.id ?
-          { ...todo, completed: !todo.completed } :
-          todo
-      )
+        todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
+      );
 
     case COMPLETE_ALL_TODOS:
-      const areAllMarked = state.every(todo => todo.completed)
+      const areAllMarked = state.every(todo => todo.completed);
       return state.map(todo => ({
         ...todo,
         completed: !areAllMarked
-      }))
+      }));
 
     case CLEAR_COMPLETED:
-      return state.filter(todo => todo.completed === false)
+      return state.filter(todo => todo.completed === false);
 
     default:
-      return state
+      return state;
   }
 }
+
+/* FOOTNOTES                                                                  ->
+1. Reducer: https://www.sohamkamani.com/blog/2017/03/31/react-redux-connect-explained/
+   Redux revolves around a 'store' which is where the state of the application
+lives.
+   The only way to modify the store is through reducers.
+   The only way to trigger reducers is to dispatch actions.
+
+*/

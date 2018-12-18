@@ -3,6 +3,7 @@ React
 Redux
 */
 
+// see [fn. 2] for React Redux lifecycle and data flow
 import React from "react";
 import { render } from "react-dom";
 import { createStore } from "redux";
@@ -31,5 +32,20 @@ serves just one purpose: to “provide” the store to its child components.
    Since the provider only makes the store accessible to it’s children, and we
 would ideally want our entire app to access the store, the most sensible thing
 to do would be to put our App component within Provider.
+2. Lifecycle https://www.reactreduxtutorials.com/2018/02/redux-tutorial-for-beginners-redux-data-flow-redux-lifecycle.html
+   Data Flow: https://1.bp.blogspot.com/-OTO90Iulza8/Wn6dsdTJyaI/AAAAAAAAAD0/_bgMEAHupMAclxL9UOGeuQOhG9BppBolACLcBGAs/s640/react-redux-architecture.jpg
 
+React (view) ========== Connection ================= Redux (store) ===============================================================
+
+                             ---<------------------------------------------------------<-- used by
+                              /                                                                    \
+                            /                                                                       \  
+Template --- Event ---> Container --- Triggers --->     Action     --- Sent to ---> Reducer         Selector
+    +                                                     +                             \             /
+Components                                          Action Creator                       \           /
+    \                                                                              updates    exposed by   
+   re-renders                                                                              \       /
+      \                                                                                     \     /
+     PROPS              Map Store                                                            STORE
+                        to Props
 */
